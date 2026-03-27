@@ -1,0 +1,49 @@
+Continue building the BGMI Rank Guesser app and add these new features exactly:
+
+=== ADDITIONAL FEATURES ===
+
+1. **Coins & Reward System (already mentioned)**  
+   - Award coins instantly after every guess: +50 for correct, +10 for wrong.  
+   - Daily login streak bonus: +20 coins (reset if missed).  
+   - Uploading a clip that gets 10+ guesses: +30 coins to uploader.
+
+2. **Daily & Weekly Challenges**  
+   - Create a /challenges page with progress tracking.  
+   - Daily Challenges (reset at midnight IST):  
+     - "Guess 10 clips today" → +100 coins  
+     - "Get 5 correct guesses in a row" → +80 coins  
+     - "Guess 5 Erangel clips" → +60 coins  
+   - Weekly Challenges (reset every Monday):  
+     - "Achieve 75% accuracy on 20+ guesses" → +250 coins + "Weekly Grinder" badge  
+     - "Upload 3 clips" → +150 coins  
+     - "Earn 1000 coins this week" → +300 coins  
+   - Show progress bars and "Claim Reward" button. Completing challenges gives extra leaderboard points.
+
+3. **Leaderboard Enhancements**  
+   - Global leaderboard: sorted by total coins + overall accuracy %.  
+   - Weekly Leaderboard: resets every Monday, shows top 10 with "Weekly Champion" badge (extra 500 coins to #1).  
+   - Display user rank position (e.g., "You are #12 this week").
+
+4. **Seed Database with Real BGMI Clips**  
+   - Automatically insert 10 real public YouTube BGMI gameplay clips as starter content when the app first runs (use a seed script or Supabase insert).  
+   - Use these short, suitable clips (10-40 sec highlights) with realistic correct ranks assigned:  
+
+     1. Title: "Conqueror Aggressive Push", URL: https://www.youtube.com/watch?v=k_MquFHYus4 , Correct Rank: Conqueror  
+     2. Title: "Conqueror Rank Push Day", URL: https://www.youtube.com/watch?v=17qq04hDPjQ , Correct Rank: Conqueror  
+     3. Title: "Ace Master Rank Push", URL: https://www.youtube.com/shorts/IJ2z-Fts2vI , Correct Rank: Ace Master  
+     4. Title: "Platinum to Conqueror Push", URL: https://www.youtube.com/watch?v=ktddwvweIec , Correct Rank: Diamond  
+     5. Title: "BGMI Funny Whiff Moment", URL: https://www.youtube.com/watch?v=kgybx60jcLg , Correct Rank: Gold (funny mistake clip)  
+     6. Title: "High KD Conqueror Lobby", URL: https://www.youtube.com/watch?v=6fTlj64Jx1g , Correct Rank: Ace Dominator  
+     7. Title: "BGMI Rank Push Gone Wrong", URL: https://www.youtube.com/shorts/8nDEcYzFpd4 , Correct Rank: Platinum  
+     8. Title: "Ace Master Clutch", URL: https://www.youtube.com/shorts/Os76BCHIuBE , Correct Rank: Ace Master  
+     9. Title: "Conqueror Gameplay Highlight", URL: https://www.youtube.com/watch?v=GloQ3egdxHM , Correct Rank: Conqueror  
+     10. Title: "BGMI WTF Moment", URL: https://youtube.com/watch?v=l5wnpP6WqLM , Correct Rank: Silver  
+
+   - For each seeded clip, set map tags (Erangel/Miramar), likes/dislikes to small numbers, and make them approved.  
+   - Add a note in README: "You can add more clips anytime by searching YouTube for 'BGMI [rank] highlight short' or 'BGMI funny rank push' and pasting new unlisted/public short links."
+
+Keep the dark BGMI military theme, mobile-first design, and all previous features (auth, upload, like/dislike, comments, etc.). Make sure coins update in real-time with toast messages like "+50 coins earned!".
+
+Update the README.md with instructions on how the coin system and challenges work, and how to add more real clips easily.
+
+Continue and finish the full app with these additions now.

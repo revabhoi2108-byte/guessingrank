@@ -1,0 +1,92 @@
+Build a complete, full-stack, production-ready web application called **"BGMI Rank Guesser"** (Battlegrounds Mobile India / PUBG Mobile Rank Guesser) using **Next.js 15 (App Router)** + **Tailwind CSS** + **Shadcn/UI** + **Supabase** (for auth, PostgreSQL database, and storage).
+
+The app is a community-driven "Guess the Rank from Clip" game focused on BGMI / PUBG Mobile. It must be mobile-friendly, dark military theme (black + army green + yellow accents, exactly like BGMI UI).
+
+=== CORE FEATURES ===
+
+1. **Authentication & Profiles**
+   - Email + Password signup / login
+   - Google OAuth signup / login
+   - Every user automatically gets a personal "Channel" (profile page) like YouTube channel.
+   - Profile shows: username, avatar, bio, total clips uploaded, total guesses made, accuracy %.
+
+2. **Guess the Rank Game (Main Feature)**
+   - Home page shows "Daily Challenge", "Random Clip", and "Featured Clips".
+   - Click any clip → full-screen player page.
+   - Shows embedded YouTube video (short 10-30 sec gameplay clip).
+   - Below video: 10 rank buttons (exactly these ranks in order):
+     • Bronze
+     • Silver
+     • Gold
+     • Platinum
+     • Diamond
+     • Crown
+     • Ace
+     • Ace Master
+     • Ace Dominator
+     • Conqueror
+   - User clicks one rank → instantly shows:
+        - Correct or Wrong
+        - "You guessed X, actual rank was Y"
+        - Community accuracy: "XX% of people guessed perfectly correct"
+        - Bar chart showing % of guesses for each rank
+   - After guess, show "Next Clip" button.
+
+3. **Community Clip Upload (Anyone can upload)**
+   - Logged-in users can go to "My Channel" → "Upload New Clip".
+   - Form: Title, YouTube unlisted link (required), correct rank (hidden from guessers), map/mode tags, short description.
+   - Optional thumbnail upload.
+   - Clips go into "Pending" and are auto-approved (or simple admin approval later).
+
+4. **Like / Dislike + Comments**
+   - Every clip has ❤️ Like and 👎 Dislike buttons (counts visible).
+   - Full comment section below every clip with replies support.
+   - Comments show username + timestamp.
+
+5. **Community & Leaderboards**
+   - Global leaderboard: Top Guessers (by accuracy and correct guesses this week).
+   - Top Uploaders leaderboard.
+   - "Hot Clips" page sorted by likes + guesses.
+
+6. **Extra Polish**
+   - Dark BGMI-style theme everywhere.
+   - Responsive (works perfectly on phone — most users will play on mobile).
+   - Simple streak counter ("3 day guess streak 🔥").
+   - Share button for clips (generates link).
+   - Footer with "Made for Indian BGMI players" + your name.
+
+=== DATABASE SCHEMA (Supabase) ===
+Create these tables automatically:
+- profiles (user metadata)
+- clips (id, title, youtube_url, correct_rank, uploader_id, likes, dislikes, views, created_at, approved)
+- guesses (id, clip_id, user_id, guessed_rank, is_correct)
+- comments (id, clip_id, user_id, text, parent_id, created_at)
+- likes (or just increment counters on clips table for simplicity)
+
+=== TECH STACK REQUIREMENTS ===
+- Next.js 15 App Router
+- Tailwind + Shadcn/UI components
+- Supabase client (auth + database + storage)
+- Server actions for all backend logic
+- No external paid APIs except Supabase (free tier)
+- Use YouTube embed for all videos (no heavy video storage)
+
+=== PAGES TO CREATE ===
+/ (Home)  
+/clip/[id] (guess page)  
+/my-channel  
+/upload  
+/leaderboard  
+/profile/[username]  
+/login & /signup
+
+Add a clean navbar with logo "BGMI Rank Guesser" and links.
+
+After generating the full code, also create a **README.md** with:
+1. Step-by-step instructions to connect Supabase (create project, get keys, run migrations).
+2. How to run locally.
+3. How to deploy on Replit.
+
+Make the UI modern, fast, and addictive. Use proper loading states and toast notifications.
+
+Start building the entire app now with all features included.

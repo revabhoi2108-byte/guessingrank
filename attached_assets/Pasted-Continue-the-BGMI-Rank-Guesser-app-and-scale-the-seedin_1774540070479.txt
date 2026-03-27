@@ -1,0 +1,99 @@
+Continue the BGMI Rank Guesser app and scale the seeding aggressively:
+
+Update the seed script to insert **as many real public BGMI YouTube Shorts and short highlights as possible** — target **300 unique short clips** (10–40 seconds ideal) across all ranks (Bronze to Conqueror mix). 
+
+Create a large seed array or loop with 200–300+ entries where feasible (repeat patterns with varied real links found from YouTube searches like "BGMI Conqueror shorts", "BGMI Ace Master shorts", "BGMI whiff shorts", "BGMI rank push highlight shorts", "BGMI funny moments shorts", "BGMI Platinum gameplay shorts", etc.). 
+
+For each clip: 
+- Set unique title (e.g., "Conqueror Aggressive Push #45", "Ace Master Clutch", "Funny Whiff in Gold Lobby")
+- youtube_url (use actual shorts/watch links)
+- correct_rank (varied realistically: Bronze/Silver for obvious whiffs/mistakes, Gold/Platinum for average plays, Ace Master/Conqueror for clean clutches/high KD)
+- map (random from Erangel, Miramar, Livik, Sanhok, etc.)
+- Small random initial likes (10-100), dislikes (0-20), approved: true
+
+Use and expand from these real public links (and add hundreds more by following the same search patterns on YouTube):
+
+Conqueror / High Rank examples:
+- https://www.youtube.com/shorts/Gxn0rV7QLQE
+- https://www.youtube.com/shorts/0rQKqVz367c
+- https://www.youtube.com/shorts/oKSMEspRWN0
+- https://www.youtube.com/shorts/O_TWMjpByfc
+- https://www.youtube.com/shorts/rN92749yzoM
+- https://www.youtube.com/shorts/4O_6PTsUxmA
+- https://www.youtube.com/shorts/vxn7nXIddz4
+- https://www.youtube.com/shorts/bFSkVB9SbBg
+- https://www.youtube.com/shorts/LorrLG_vA34
+- https://www.youtube.com/shorts/FmE0hpPKGas
+- https://www.youtube.com/shorts/8RbqnRonRjA
+- https://www.youtube.com/watch?v=PbsW5tNIWN0
+- https://www.youtube.com/watch?v=-5TrHAM2igk
+- https://www.youtube.com/watch?v=V-PxyalkjpU
+- https://www.youtube.com/watch?v=fhmsHoIocCM
+- https://www.youtube.com/watch?v=c1AH3eIxpH0
+- https://www.youtube.com/watch?v=kSNIWyv4YN0
+- https://www.youtube.com/watch?v=dUNcldviLNI
+- https://www.youtube.com/watch?v=QyX1yFhxbMo
+- https://www.youtube.com/shorts/4KWPfh7R_CE
+- https://www.youtube.com/watch?v=UW_KS44dd9Q
+- https://www.youtube.com/watch?v=-yytO6jJpWw
+- https://www.youtube.com/watch?v=FImz5rHO254
+- https://www.youtube.com/watch?v=tCcqV_ptlew
+- https://www.youtube.com/watch?v=ASweqiQ9Be8
+- https://www.youtube.com/shorts/sJ-R4eRtbjU
+- https://www.youtube.com/shorts/bPAWT_MlXm4
+- https://www.youtube.com/shorts/SNsx7KgeF5Y
+- https://www.youtube.com/shorts/sjm66Q7de6g
+- https://www.youtube.com/shorts/rBJQB5Yd33U
+
+Ace Master examples:
+- https://www.youtube.com/shorts/dE6CI5fqyt0
+- https://www.youtube.com/shorts/7kmod2ta8Zo
+- https://www.youtube.com/watch?v=T6fICsw7vsY
+- https://www.youtube.com/shorts/l-mCB0-5CUo
+- https://www.youtube.com/shorts/-xk9-R1hVUY
+- https://www.youtube.com/shorts/n3zUieq4FlY
+- https://www.youtube.com/shorts/FCTOF54Wayg
+- https://www.youtube.com/watch?v=jN1YxdF-t88
+- https://www.youtube.com/shorts/Os76BCHIuBE
+- https://www.youtube.com/shorts/FuOscfFt4qU
+- https://www.youtube.com/watch?v=-yytO6jJpWw
+- https://www.youtube.com/watch?v=oocGv-wUWpY
+
+Whiff / Funny / Lower-Mid examples:
+- https://www.youtube.com/watch?v=b0km6JI3IgA
+- https://www.youtube.com/watch?v=HVV8B-UpDMM
+- https://www.youtube.com/watch?v=q067sfI7BJQ
+- https://www.youtube.com/shorts/a5EQDCLD4cs
+- https://www.youtube.com/watch?v=kgybx60jcLg
+- https://www.youtube.com/shorts/8nDEcYzFpd4
+- https://www.youtube.com/watch?v=l5wnpP6WqLM
+- https://www.youtube.com/shorts/Y0jmCkE7WGc
+- https://www.youtube.com/shorts/UnoUl_3uYPo
+
+More mixed / rank push:
+- https://www.youtube.com/shorts/BIUQxx4g1nU
+- https://www.youtube.com/watch?v=4T0PWkdNEcU
+- https://www.youtube.com/watch?v=Gs9XaA5GH4w
+- https://www.youtube.com/watch?v=xNZJpP1CTU0
+- https://www.youtube.com/watch?v=bmYJAzbe7lA
+- https://www.youtube.com/watch?v=xEanUF5BVno
+- https://www.youtube.com/watch?v=sQqYUcnghy4
+- https://www.youtube.com/watch?v=4ODZWVgFCBQ
+- https://www.youtube.com/shorts/VyJuQGiOeyA
+- https://www.youtube.com/watch?v=OcDVTxL4GeM
+- https://www.youtube.com/shorts/SaxGVQGoMSY
+- https://www.youtube.com/watch?v=IJGTRx08WNc
+- https://www.youtube.com/shorts/fx6bEn3JQ90
+- https://www.youtube.com/shorts/yMHaRC1uLwQ
+- https://www.youtube.com/shorts/Z179FzirKF0
+- https://www.youtube.com/shorts/I8mwT9aOOIE
+
+In code, make the seed script robust (array of objects or multiple batches) so it can handle 300 entries without crashing. Run seed automatically on first launch (or one-time admin button). If exactly 300 is too much for initial load, prioritize variety and note in README that more can be added via upload.
+
+This gives the site massive real content (hundreds of BGMI shorts) from day one so users have endless guessing fun.
+
+Update README.md: "App auto-seeds up to 300 real BGMI YouTube Shorts/highlights on first run for instant content. Easily add unlimited more via the upload form by searching YouTube for 'BGMI Conqueror shorts', 'BGMI Ace Master shorts', 'BGMI whiff shorts', 'BGMI rank push shorts' etc."
+
+Keep all previous features (coins, daily/weekly challenges, leaderboards, like/dislike, comments, etc.) unchanged.
+
+Continue and implement this 300-clip seeding now.

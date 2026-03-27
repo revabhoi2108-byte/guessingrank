@@ -1,0 +1,36 @@
+Continue the BGMI Rank Guesser app and fix these exact problems:
+
+1. **Clips must be short only (10-120 seconds max)**  
+   - Change seeding to use **only short clips or Shorts** (1-2 minute clutch/whiff moments, never 1-hour videos).  
+   - Filter the seed list to short gameplay highlights, funny moments, 1v4 clutches, rank push fails — ideal for quick guessing.  
+   - Update seed script to prioritize YouTube Shorts URLs or videos under 2 minutes. If any long video is in the list, replace it with short alternatives.  
+   - Example good short clips to include (mix more similar ones from YouTube "BGMI 1v4 clutch shorts", "BGMI funny whiff shorts", "BGMI Conqueror clutch shorts"):  
+     - https://www.youtube.com/shorts/7uX_re9L7q0 (funny 1v2)  
+     - https://www.youtube.com/shorts/-xk9-R1hVUY (Ace Master clutch)  
+     - https://www.youtube.com/shorts/4KWPfh7R_CE  
+     - https://www.youtube.com/shorts/sJ-R4eRtbjU  
+     - https://www.youtube.com/shorts/bPAWT_MlXm4  
+     - https://www.youtube.com/shorts/a5EQDCLD4cs (whiff)  
+     - https://www.youtube.com/shorts/8nDEcYzFpd4 (rank push gone wrong)  
+     - https://www.youtube.com/shorts/Os76BCHIuBE (Ace Master clutch)  
+   - Aim for 200-300 short clips in seed if possible, all quick and suitable.
+
+2. **Auto-switch to next clip**  
+   - After any guess (correct or wrong):  
+     - Show result for 1-2 seconds with toast notification.  
+     - If **correct**: Show big green "🎉 Congratulations!" + coins earned message, then automatically go to next random/short clip after 2 seconds.  
+     - If **wrong**: Show red "Incorrect" + correct rank explanation, then automatically switch to next clip after 2-3 seconds (no manual "Next" button needed for flow).  
+   - Add smooth transition/loading between clips.
+
+3. **Fix all errors (especially leaderboard and seeding)**  
+   - Debug and fix leaderboard errors: Make sure global + weekly leaderboards load without crashing (sort by coins + accuracy, handle empty states).  
+   - Fix seeding errors: Make seed script robust (batches if needed, handle duplicates, run only once on first launch).  
+   - Fix common Supabase/Replit issues: Ensure proper env vars, RLS policies allow reads/writes for authenticated users, correct auth setup with @supabase/ssr.  
+   - Add error boundaries and better console logging for debugging.  
+   - Test flow: signup → guess clip → see result + auto next → coins update → leaderboard refreshes.
+
+Keep coins, daily/weekly challenges, like/dislike, comments, upload, and dark BGMI theme unchanged. Make the guessing experience fast and addictive like a mobile game.
+
+Update README with notes on short clips only and how the auto-advance works.
+
+Continue and implement these fixes now.

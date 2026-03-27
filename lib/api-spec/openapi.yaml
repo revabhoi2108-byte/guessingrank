@@ -1,0 +1,851 @@
+openapi: 3.1.0
+info:
+  title: Api
+  version: 0.1.0
+  description: BGMI Rank Guesser API
+servers:
+  - url: /api
+    description: Base API path
+tags:
+  - name: health
+    description: Health operations
+  - name: auth
+    description: Authentication
+  - name: clips
+    description: Clip management
+  - name: guesses
+    description: Rank guesses
+  - name: comments
+    description: Comments
+  - name: leaderboard
+    description: Leaderboards
+  - name: profiles
+    description: User profiles
+
+paths:
+  /healthz:
+    get:
+      operationId: healthCheck
+      tags: [health]
+      summary: Health check
+      responses:
+        "200":
+          description: Healthy
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/HealthStatus"
+
+  /auth/me:
+    get:
+      operationId: getMe
+      tags: [auth]
+      summary: Get current user
+      responses:
+        "200":
+          description: Current user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/login:
+    post:
+      operationId: login
+      tags: [auth]
+      summary: Login with email/password
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LoginRequest"
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "401":
+          description: Invalid credentials
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/register:
+    post:
+      operationId: register
+      tags: [auth]
+      summary: Register new user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/RegisterRequest"
+      responses:
+        "201":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AuthResponse"
+        "400":
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /auth/logout:
+    post:
+      operationId: logout
+      tags: [auth]
+      summary: Logout
+      responses:
+        "200":
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MessageResponse"
+
+  /clips:
+    get:
+      operationId: getClips
+      tags: [clips]
+      summary: Get clips list
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: integer
+            default: 1
+        - name: limit
+          in: query
+          schema:
+            type: integer
+            default: 12
+        - name: sort
+          in: query
+          schema:
+            type: string
+            enum: [latest, hot, most_guessed]
+            default: latest
+        - name: featured
+          in: query
+          schema:
+            type: boolean
+      responses:
+        "200":
+          description: Clips list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClipsListResponse"
+
+  /clips/daily:
+    get:
+      operationId: getDailyChallenge
+      tags: [clips]
+      summary: Get today's daily challenge clip
+      responses:
+        "200":
+          description: Daily challenge clip
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Clip"
+
+  /clips/random:
+    get:
+      operationId: getRandomClip
+      tags: [clips]
+      summary: Get a random clip
+      responses:
+        "200":
+          description: Random clip
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Clip"
+
+  /clips/{id}:
+    get:
+      operationId: getClip
+      tags: [clips]
+      summary: Get a specific clip
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Clip details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ClipDetail"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /clips/upload:
+    post:
+      operationId: uploadClip
+      tags: [clips]
+      summary: Upload a new clip
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UploadClipRequest"
+      responses:
+        "201":
+          description: Clip uploaded
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Clip"
+        "401":
+          description: Unauthorized
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /clips/{id}/like:
+    post:
+      operationId: likeClip
+      tags: [clips]
+      summary: Like or dislike a clip
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/LikeRequest"
+      responses:
+        "200":
+          description: Updated counts
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/LikeResponse"
+
+  /clips/{id}/guess:
+    post:
+      operationId: submitGuess
+      tags: [guesses]
+      summary: Submit a rank guess for a clip
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/GuessRequest"
+      responses:
+        "200":
+          description: Guess result
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/GuessResult"
+
+  /clips/{id}/comments:
+    get:
+      operationId: getComments
+      tags: [comments]
+      summary: Get comments for a clip
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Comments list
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Comment"
+    post:
+      operationId: postComment
+      tags: [comments]
+      summary: Post a comment
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CommentRequest"
+      responses:
+        "201":
+          description: Comment created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Comment"
+
+  /leaderboard/guessers:
+    get:
+      operationId: getGuessersLeaderboard
+      tags: [leaderboard]
+      summary: Get top guessers leaderboard
+      parameters:
+        - name: period
+          in: query
+          schema:
+            type: string
+            enum: [weekly, alltime]
+            default: weekly
+      responses:
+        "200":
+          description: Guessers leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/LeaderboardEntry"
+
+  /leaderboard/uploaders:
+    get:
+      operationId: getUploadersLeaderboard
+      tags: [leaderboard]
+      summary: Get top uploaders leaderboard
+      responses:
+        "200":
+          description: Uploaders leaderboard
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/UploaderLeaderboardEntry"
+
+  /profiles/{username}:
+    get:
+      operationId: getProfile
+      tags: [profiles]
+      summary: Get user profile
+      parameters:
+        - name: username
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: User profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PublicProfile"
+        "404":
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
+
+  /profiles/me/clips:
+    get:
+      operationId: getMyClips
+      tags: [profiles]
+      summary: Get current user's uploaded clips
+      responses:
+        "200":
+          description: User's clips
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Clip"
+
+  /profiles/me/update:
+    post:
+      operationId: updateProfile
+      tags: [profiles]
+      summary: Update current user profile
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateProfileRequest"
+      responses:
+        "200":
+          description: Updated profile
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/UserProfile"
+
+components:
+  schemas:
+    HealthStatus:
+      type: object
+      properties:
+        status:
+          type: string
+      required:
+        - status
+
+    ErrorResponse:
+      type: object
+      properties:
+        error:
+          type: string
+      required:
+        - error
+
+    MessageResponse:
+      type: object
+      properties:
+        message:
+          type: string
+      required:
+        - message
+
+    LoginRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+      required:
+        - email
+        - password
+
+    RegisterRequest:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+        username:
+          type: string
+      required:
+        - email
+        - password
+        - username
+
+    AuthResponse:
+      type: object
+      properties:
+        user:
+          $ref: "#/components/schemas/UserProfile"
+        token:
+          type: string
+      required:
+        - user
+        - token
+
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        email:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        totalClips:
+          type: integer
+        totalGuesses:
+          type: integer
+        correctGuesses:
+          type: integer
+        accuracyPercent:
+          type: number
+        streakDays:
+          type: integer
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - username
+        - email
+        - totalClips
+        - totalGuesses
+        - correctGuesses
+        - accuracyPercent
+        - streakDays
+        - createdAt
+
+    PublicProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+        bio:
+          type: string
+          nullable: true
+        totalClips:
+          type: integer
+        totalGuesses:
+          type: integer
+        correctGuesses:
+          type: integer
+        accuracyPercent:
+          type: number
+        streakDays:
+          type: integer
+        clips:
+          type: array
+          items:
+            $ref: "#/components/schemas/Clip"
+      required:
+        - id
+        - username
+        - totalClips
+        - totalGuesses
+        - correctGuesses
+        - accuracyPercent
+        - streakDays
+        - clips
+
+    UpdateProfileRequest:
+      type: object
+      properties:
+        username:
+          type: string
+        bio:
+          type: string
+        avatarUrl:
+          type: string
+
+    Clip:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        youtubeUrl:
+          type: string
+        thumbnailUrl:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        map:
+          type: string
+          nullable: true
+        mode:
+          type: string
+          nullable: true
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+        views:
+          type: integer
+        totalGuesses:
+          type: integer
+        approved:
+          type: boolean
+        uploaderId:
+          type: integer
+        uploaderUsername:
+          type: string
+        isFeatured:
+          type: boolean
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - title
+        - youtubeUrl
+        - likes
+        - dislikes
+        - views
+        - totalGuesses
+        - approved
+        - uploaderId
+        - uploaderUsername
+        - isFeatured
+        - createdAt
+
+    ClipDetail:
+      allOf:
+        - $ref: "#/components/schemas/Clip"
+        - type: object
+          properties:
+            rankDistribution:
+              type: array
+              items:
+                $ref: "#/components/schemas/RankGuessCount"
+            userGuess:
+              type: string
+              nullable: true
+              description: The current user's guess (if any)
+            correctRank:
+              type: string
+              nullable: true
+              description: Only returned after the user has guessed
+          required:
+            - rankDistribution
+
+    RankGuessCount:
+      type: object
+      properties:
+        rank:
+          type: string
+        count:
+          type: integer
+        percentage:
+          type: number
+      required:
+        - rank
+        - count
+        - percentage
+
+    ClipsListResponse:
+      type: object
+      properties:
+        clips:
+          type: array
+          items:
+            $ref: "#/components/schemas/Clip"
+        total:
+          type: integer
+        page:
+          type: integer
+        totalPages:
+          type: integer
+      required:
+        - clips
+        - total
+        - page
+        - totalPages
+
+    UploadClipRequest:
+      type: object
+      properties:
+        title:
+          type: string
+        youtubeUrl:
+          type: string
+        correctRank:
+          type: string
+        description:
+          type: string
+        map:
+          type: string
+        mode:
+          type: string
+        thumbnailUrl:
+          type: string
+      required:
+        - title
+        - youtubeUrl
+        - correctRank
+
+    LikeRequest:
+      type: object
+      properties:
+        action:
+          type: string
+          enum: [like, dislike]
+      required:
+        - action
+
+    LikeResponse:
+      type: object
+      properties:
+        likes:
+          type: integer
+        dislikes:
+          type: integer
+      required:
+        - likes
+        - dislikes
+
+    GuessRequest:
+      type: object
+      properties:
+        guessedRank:
+          type: string
+        sessionId:
+          type: string
+          description: Anonymous session ID for non-logged-in users
+      required:
+        - guessedRank
+
+    GuessResult:
+      type: object
+      properties:
+        isCorrect:
+          type: boolean
+        guessedRank:
+          type: string
+        correctRank:
+          type: string
+        communityAccuracyPercent:
+          type: number
+        rankDistribution:
+          type: array
+          items:
+            $ref: "#/components/schemas/RankGuessCount"
+      required:
+        - isCorrect
+        - guessedRank
+        - correctRank
+        - communityAccuracyPercent
+        - rankDistribution
+
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+        clipId:
+          type: integer
+        userId:
+          type: integer
+        username:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+        text:
+          type: string
+        parentId:
+          type: integer
+          nullable: true
+        replies:
+          type: array
+          items:
+            $ref: "#/components/schemas/Comment"
+        createdAt:
+          type: string
+          format: date-time
+      required:
+        - id
+        - clipId
+        - userId
+        - username
+        - text
+        - createdAt
+
+    CommentRequest:
+      type: object
+      properties:
+        text:
+          type: string
+        parentId:
+          type: integer
+          nullable: true
+      required:
+        - text
+
+    LeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        userId:
+          type: integer
+        username:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+        totalGuesses:
+          type: integer
+        correctGuesses:
+          type: integer
+        accuracyPercent:
+          type: number
+        streakDays:
+          type: integer
+      required:
+        - rank
+        - userId
+        - username
+        - totalGuesses
+        - correctGuesses
+        - accuracyPercent
+        - streakDays
+
+    UploaderLeaderboardEntry:
+      type: object
+      properties:
+        rank:
+          type: integer
+        userId:
+          type: integer
+        username:
+          type: string
+        avatarUrl:
+          type: string
+          nullable: true
+        totalClips:
+          type: integer
+        totalLikes:
+          type: integer
+        totalGuessesReceived:
+          type: integer
+      required:
+        - rank
+        - userId
+        - username
+        - totalClips
+        - totalLikes
+        - totalGuessesReceived

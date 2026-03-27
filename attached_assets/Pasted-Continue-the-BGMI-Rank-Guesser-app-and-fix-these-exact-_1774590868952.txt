@@ -1,0 +1,53 @@
+Continue the BGMI Rank Guesser app and fix these exact problems right now with high priority:
+
+1. **FORCE ONLY SHORT CLIPS (1-2 minutes max – NO 13 min videos ever again)**
+   - Update ALL seeding and upload validation to accept **ONLY YouTube Shorts** (URLs that contain "/shorts/").
+   - In the seed script, reject and remove any long video (>2 min). Use ONLY the clean short clips listed below.
+   - Add strict server-side validation: if a URL is not a Shorts link or the video is long, show error "Only 10-120 second Shorts allowed" and block it.
+
+2. **REMOVE CLIPS WITH RANK TEXT OVERLAY IN VIDEO**
+   - Choose ONLY clean gameplay clips where the actual video does NOT show the player's rank (no text like "Conqueror", "Ace Master", rank badge, or "Rank Push" burned into the gameplay screen).
+   - Avoid any clip whose title or description clearly indicates visible rank text. Prioritize pure clutch/whiff/funny moments without any rank spoiler on-screen.
+
+3. **Updated Seed List – Use ONLY these short clean clips (add 150-200+ similar Shorts by searching "BGMI 1v4 clutch shorts", "BGMI funny whiff shorts", "BGMI clean clutch shorts" and picking ones without rank text)**
+   Replace old seed with these verified short ones (and expand the array with many more matching Shorts):
+
+   - https://www.youtube.com/shorts/WzRuu4w6jsE
+   - https://www.youtube.com/shorts/5_dDGNlGhzk
+   - https://www.youtube.com/shorts/WoCaYcru1Q0
+   - https://www.youtube.com/shorts/-xk9-R1hVUY
+   - https://www.youtube.com/shorts/XiaI4gEtToM
+   - https://www.youtube.com/shorts/-2XStMya4Uk
+   - https://www.youtube.com/shorts/7uX_re9L7q0
+   - https://www.youtube.com/shorts/huuBh_gcQCA
+   - https://www.youtube.com/shorts/O_A65gAFJx4
+   - https://www.youtube.com/shorts/byP2Nuy37X4
+   - https://www.youtube.com/shorts/2aWGtYJSd8k
+   - https://www.youtube.com/shorts/Q-saNPrpr4E
+   - https://www.youtube.com/shorts/3BvPBBtMe4M
+   - https://www.youtube.com/shorts/kgxXI8Fatoc
+   - https://www.youtube.com/shorts/bdKxGGd0LPo
+   - https://www.youtube.com/shorts/vVZkX4cBSAM
+   - https://www.youtube.com/shorts/VhQliNhqsyU
+   - https://www.youtube.com/shorts/a5EQDCLD4cs
+   - https://www.youtube.com/shorts/8nDEcYzFpd4
+   - https://www.youtube.com/shorts/Os76BCHIuBE
+
+   In seed script: create a big array of 150-200+ such Shorts, assign varied correct ranks (Bronze-Silver for whiffs, Gold-Platinum for average, Ace Master-Conqueror for clean clutches), set map tags, approved: true.
+
+4. **YouTube Embed Fix (no more invalid URL error)**
+   - Automatically convert every /shorts/VIDEO_ID to https://www.youtube.com/embed/VIDEO_ID
+   - Use responsive vertical iframe (height 560px or 9:16 ratio) with proper allow attributes.
+   - Add fallback message if embed fails.
+
+5. **Keep auto-advance + congrats**
+   - After guess: 1.5 sec toast → correct = big green "🎉 Congratulations! +50 coins" then auto next clip; wrong = red "Incorrect" then auto next clip.
+
+6. **Security & stability**
+   - Keep all previous RLS, sanitization, rate limiting, and server actions.
+
+Make seeding run cleanly with ONLY short clean clips. Update README: "Now seeds 150+ real BGMI Shorts only (no long videos, no rank text on screen)."
+
+Fix these issues completely and test a full clip load + guess cycle.
+
+Continue implementing now.
